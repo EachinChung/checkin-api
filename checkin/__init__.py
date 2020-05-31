@@ -3,6 +3,7 @@ from traceback import format_exc
 
 from flask import Flask, request
 
+from checkin.api_bp.logs import logs_bp
 from checkin.api_bp.map import map_bp
 from checkin.api_bp.oauth import oauth_bp
 from checkin.api_bp.tasks import tasks_bp
@@ -36,6 +37,7 @@ def register_blueprints(app) -> None:
     :param app:
     :return:
     """
+    app.register_blueprint(logs_bp, url_prefix="/logs")
     app.register_blueprint(oauth_bp, url_prefix="/oauth")
     app.register_blueprint(tasks_bp, url_prefix="/tasks")
     app.register_blueprint(map_bp, url_prefix="/map")
