@@ -1,8 +1,9 @@
-from flask import Blueprint, request, g
+from flask import Blueprint, g, request
 from flask.views import MethodView
 
 from checkin.api_error import APIError
-from checkin.common import response_json
+from checkin.common import get_request_body, response_json
+from checkin.extensions import db
 from checkin.models import Task
 from checkin.token import login_required
 
@@ -57,5 +58,20 @@ class TasksAPI(MethodView):
         if task.user_id != g.id: raise APIError("你无权访问该任务")
         return response_json(_decode(task))
 
+    @staticmethod
+    def patch(task_id):
+        task = Task.query.get(task_id)
+        if task is None: raise APIError("该任务不存在")
+        if task.user_id != g.id: raise APIError("你无权访问该任务")
 
-tasks_bp.add_url_rule(rule="/<int:task_id>", view_func=TasksAPI.as_view("tasks"), methods=("GET", "POST"))
+        address, longitude, latitude = get_request_body("address", "longitude", "latitude")
+        task.address = address
+        task.longitude = longitude
+        task.latitude = latitude
+
+        db.session.add(task)
+        db.session.commit()
+        return response_json(msg="设置成功")
+
+
+tasks_bp.add_url_rule(rule="/<int:task_id>", view_func=TasksAPI.as_view("tasks"), methods=("GET", "PATCH"))

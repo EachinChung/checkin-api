@@ -15,7 +15,7 @@ def safe_md5(s: str) -> str:
     if not isinstance(s, bytes):
         s = bytes(s, encoding='utf-8')
 
-    return md5(s).hexdigest().upper()
+    return md5(s).hexdigest()
 
 
 def get_request_body(*keys) -> list:

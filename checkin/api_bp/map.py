@@ -3,10 +3,12 @@ from requests import get
 
 from checkin.api_error import APIError
 from checkin.common import get_request_body, response_json
+from checkin.token import login_required
 
 map_bp = Blueprint("map", __name__)
 
 
+@login_required
 @map_bp.route("/BD09", methods=["POST"])
 def bd09():
     try:
