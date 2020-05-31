@@ -1,0 +1,17 @@
+# 以下将被 Git 忽略
+
+# 文件夹
+/venv/
+/.idea/
+/.vscode/
+/htmlcov/
+/tests/
+__pycache__
+
+# 文件
+.env
+.DS_Store
+.coverage
+
+# 错误日志
+err.log
