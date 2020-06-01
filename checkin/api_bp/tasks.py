@@ -24,7 +24,8 @@ def get_tasks():
             end_hour=item.end_hour
         )
 
-    tasks = Task.query.filter_by(user_id=g.id).paginate(page=page, per_page=20)
+    tasks = Task.query.filter_by(user_id=g.id).order_by(
+        Task.weekday).order_by(Task.start_hour).paginate(page=page, per_page=20)
     items = list(map(_decode, tasks.items))
 
     return response_json(dict(
