@@ -20,7 +20,7 @@ def get_tasks():
             id=item.id,
             course_name=item.course_name,
             weekday=item.weekday,
-            start_hour=item.start_hour,
+            start_hour=str(item.start_hour).zfill(2),
             end_hour=item.end_hour
         )
 

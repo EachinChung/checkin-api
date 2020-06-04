@@ -22,7 +22,7 @@ def get_logs():
             checkin_type=item.checkin_type
         )
 
-    logs = Log.query.filter_by(user_id=g.id).paginate(page=page, per_page=20)
+    logs = Log.query.filter_by(user_id=g.id).order_by(Log.datetime.desc()).paginate(page=page, per_page=20)
     items = list(map(_decode, logs.items))
 
     return response_json(dict(
