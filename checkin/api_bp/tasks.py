@@ -21,7 +21,7 @@ def get_tasks():
             course_name=item.course_name,
             weekday=item.weekday,
             start_hour=str(item.start_hour).zfill(2),
-            end_hour=item.end_hour
+            end_hour=str(item.end_hour).zfill(2)
         )
 
     tasks = Task.query.filter_by(user_id=g.id).order_by(
